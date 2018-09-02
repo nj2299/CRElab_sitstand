@@ -346,6 +346,7 @@ void sendHeight() {
 
 /*****************MQTT Listener******************************************************/
 void callback(char* topic, byte* payload, unsigned int length2){
+  //topicString = WiFi.macAddress();
   Serial.print("Message arrived in topic: ");
   Serial.println(topic);
 
@@ -361,33 +362,38 @@ void callback(char* topic, byte* payload, unsigned int length2){
   StaticJsonBuffer<300> JSONbuffer; 
   String inData = String((char*)payload);
   JsonObject& root = JSONbuffer.parseObject(inData);
+
+
+    String ID = root["ID"];
+    if(ID == "All" || ID == topicString){
+      String request = root["details"];
+      if(request == "height"){
+        JsonObject& JSONencoder = JSONbuffer.createObject();
+        JSONencoder["currentHeight"] = getHeight();
+        JSONencoder["previousRecordedHeight"] = prevHeight;
+        char JSONmessageBuffer[100];
+        JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
+        client.publish(topic_request_pub, JSONmessageBuffer);
+      }           
+      else if(request == "diagnostics"){
+        Serial.println("-----Getting Diagnostic Data--------");
+        JsonObject& JSONencoder = JSONbuffer.createObject();
+        JSONencoder["ID"] = clientName;
+        JSONencoder["Connected"] = connect_time;
+        JSONencoder["LastUpdate"] = last_update;
+        JSONencoder["WiFiSig"] = WiFi.RSSI();
+        JSONencoder["Height"] = getHeight();
+        char JSONmessageBuffer[300];
+        JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
+        client.publish(topic_request_pub, JSONmessageBuffer);
+        Serial.println(JSONmessageBuffer);
+          } 
+       else if (request == "update"){
+        updateFirmware();      
+       }
   
-  String request = root["details"];
-  if(request == "height"){
+    }
   
-    JsonObject& JSONencoder = JSONbuffer.createObject();
-    JSONencoder["currentHeight"] = getHeight();
-    JSONencoder["previousRecordedHeight"] = prevHeight;
-    char JSONmessageBuffer[100];
-    JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
-    client.publish(topic_request_pub, JSONmessageBuffer);
-  }           
-  else if(request == "diagnostics"){
-    Serial.println("-----Getting Diagnostic Data--------");
-    JsonObject& JSONencoder = JSONbuffer.createObject();
-    JSONencoder["ID"] = clientName;
-    JSONencoder["Connected"] = connect_time;
-    JSONencoder["LastUpdate"] = last_update;
-    JSONencoder["WiFiSig"] = WiFi.RSSI();
-    JSONencoder["Height"] = getHeight();
-    char JSONmessageBuffer[300];
-    JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
-    client.publish(topic_request_pub, JSONmessageBuffer);
-    Serial.println(JSONmessageBuffer);
-      } 
-   else if (request == "update"){
-    updateFirmware();      
-   }
 }
 
 /*****************Firmware Upate******************************************************/
@@ -395,7 +401,7 @@ void callback(char* topic, byte* payload, unsigned int length2){
 void updateFirmware(){
   
  // t_httpUpdate_return ret = ESPhttpUpdate.update("http://99.231.14.167/update");
-    t_httpUpdate_return ret = ESPhttpUpdate.update("http://nj2299.duckdns.org/update");
+    t_httpUpdate_return ret = ESPhttpUpdate.update("http://nj2299.duckdns.org/UpdateSitStand");
 
       Serial.println(ret);
         switch(ret) {
