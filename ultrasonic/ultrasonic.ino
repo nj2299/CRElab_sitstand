@@ -202,7 +202,7 @@ void sendStartupMessage(){
   JSONencoder["startuptime"] = now;
   char JSONmessageBuffer[100];
   JSONencoder.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
-  client.publish(topic_pub, JSONmessageBuffer, false);
+  client.publish(topic_request_pub, JSONmessageBuffer, false);
   
 }
 
