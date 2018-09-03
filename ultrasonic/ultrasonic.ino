@@ -27,7 +27,7 @@ const int trigPin1 = D4;
 const int echoPin1 = D3;  
 //const int trigPin2 = D6;
 //const int echoPin2 = D5;
-/*********************** Global Variables***************************/
+/*********************** Global Variables**********************/
 long duration1;
 //long duration2;
 int distance1;
