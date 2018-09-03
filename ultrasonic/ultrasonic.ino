@@ -280,24 +280,20 @@ int getHeight() {
     
     digitalWrite(trigPin1, LOW);
     //digitalWrite(trigPin2, LOW);
-    delayMicroseconds(2);
+    //delayMicroseconds(2);
     // Sets the trigPin on HIGH state for 10 micro seconds
     digitalWrite(trigPin1, HIGH);
     delayMicroseconds(10);
     digitalWrite(trigPin1, LOW);
     duration1 = pulseIn(echoPin1, HIGH);    //echo pin changes to HIGH when pulse is read - duration measures time
-
-    delayMicroseconds(10);
-
-
+//    delayMicroseconds(10);
  //   digitalWrite(trigPin2, HIGH);
  //   delayMicroseconds(10);
  //   digitalWrite(trigPin2, LOW);
     // Reads the echoPin, returns the sound wave travel time in microseconds
  //   duration2 = pulseIn(echoPin2, HIGH);
-
-    // Calculating the distance
-    distance1 = duration1 * 0.034 / 2;
+   // Calculating the distance
+    distance1 = (duration1 * 0.0343) / 2;
 //    distance2 = duration2 * 0.034 / 2;
     // Prints the distance on the Serial Monitor
     //Serial.println("dist1");
