@@ -1,3 +1,9 @@
+/************************************************************
+Date: Sept 2018
+Code is used for measuring how often a motorized desk changes height.
+Chip: ESP8266 - Node MCU
+Sensor: Ultrasonic SR04
+*************************************************************/
 /*************************Headers***************************/
 #include <Time.h>
 #include <TimeLib.h>
@@ -26,7 +32,6 @@ long duration1;
 //long duration2;
 int distance1;
 //int distance2;
-
 int movementThreshold = 6;
 int baseline;
 int baselineSize = 15;
