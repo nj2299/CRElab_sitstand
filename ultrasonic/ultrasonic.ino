@@ -23,8 +23,8 @@ Sensor: Ultrasonic SR04
 
 /************************Define Pins***************************/
 // defines pins numbers
-const int trigPin1 = D4;
-const int echoPin1 = D3;  
+const int trigPin1 = D8;
+const int echoPin1 = D7;  
 //const int trigPin2 = D6;
 //const int echoPin2 = D5;
 /*********************** Global Variables**********************/
