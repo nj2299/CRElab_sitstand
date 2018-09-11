@@ -52,9 +52,7 @@ unsigned long last_update;
 
 int delayval = 100; 
 
-//const char* ssid = "121King5_GOOD";
-//const char* password = "BronBronIn7";
-//const char* mqttServer = "192.168.0.19";
+
 const int mqttPort = 1883;
 
 //EDIT THESE 3 VALUES
