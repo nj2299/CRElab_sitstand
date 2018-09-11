@@ -400,8 +400,8 @@ void callback(char* topic, byte* payload, unsigned int length2){
 
 void updateFirmware(){
   
- // t_httpUpdate_return ret = ESPhttpUpdate.update("http://99.231.14.167/update");
-    t_httpUpdate_return ret = ESPhttpUpdate.update("http://nj2299.duckdns.org/UpdateSitStand");
+  t_httpUpdate_return ret = ESPhttpUpdate.update("http://99.231.14.167/UpdateSitStand");
+ //   t_httpUpdate_return ret = ESPhttpUpdate.update("http://nj2299.duckdns.org/UpdateSitStand");
 
       Serial.println(ret);
         switch(ret) {
